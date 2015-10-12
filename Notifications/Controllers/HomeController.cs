@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Notifications.DAL;
+using System.Web.Script.Serialization;
 
 namespace Notifications.Controllers
 {
@@ -10,7 +12,12 @@ namespace Notifications.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            using (var db = new NotificationsContext())
+            {
+                var list = db.Notifications.ToList();
+
+                return View(list);
+            }
         }
 
         public ActionResult About()
